@@ -38,7 +38,7 @@ export class AccountService {
 			throw new Error('Email already exists')
 		}
 
-		const user = await this.prismaService.user.create({
+		await this.prismaService.user.create({
 			data: {
 				username,
 				email,
@@ -47,6 +47,6 @@ export class AccountService {
 			}
 		})
 
-		return user
+		return true
 	}
 }
