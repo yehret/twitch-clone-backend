@@ -16,7 +16,7 @@ async function bootstrap() {
 	const config = app.get(ConfigService)
 	const redis = app.get(RedisService)
 
-	app.use(cookieParser(config.getOrThrow<string>('COOKIE_SECRET')))
+	app.use(cookieParser(config.getOrThrow<string>('COOKIES_SECRET')))
 
 	app.useGlobalPipes(
 		new ValidationPipe({
