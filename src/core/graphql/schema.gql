@@ -36,7 +36,7 @@ type Mutation {
   createUser(data: CreateUserInput!): Boolean!
   loginUser(data: LoginInput!): UserModel!
   logoutUser: Boolean!
-  removeSession: Boolean!
+  removeSession(id: String!): Boolean!
 }
 
 type Query {

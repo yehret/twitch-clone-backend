@@ -144,12 +144,14 @@ export class SessionService {
 	}
 
 	public async remove(req: Request, id: string) {
+		console.log('here')
+
 		if (req.session.id === id) {
 			throw new ConflictException('Can not delete current session')
 		}
 
 		await this.redisService.del(
-			`${this.configService.getOrThrow<string>('SESSION_FOLDER')}:${id}`
+			`${this.configService.getOrThrow<string>('SESSION_FOLDER')}${id}`
 		)
 
 		return true
