@@ -24,8 +24,8 @@ import { RedisModule } from './redis/redis.module'
 			inject: [ConfigService]
 		}),
 		PrismaModule,
-		RedisModule,
 		AccountModule,
+		RedisModule,
 		SessionModule
 	]
 })
