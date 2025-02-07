@@ -33,10 +33,10 @@ export function VerificationTemplate({
                   <Text className='text-gray-600'>
 							If you have any questions or encounter difficulties, feel free to contact our support service at{' '}
 							<Link 
-								href="mailto:MS_tsFX9b@trial-pq3enl6zpw542vwr.mlsender.net" 
+								href="mailto:test_mail@mail.net" 
 								className="text-[#18b9ae] underline"
 							>
-								MS_tsFX9b@trial-pq3enl6zpw542vwr.mlsender.net
+								test_mail@mail.net
 							</Link>.
 						</Text>
                </Section>
