@@ -94,9 +94,11 @@ type UserModel {
   avatar: String
   bio: String
   createdAt: DateTime!
+  deactivatedAt: DateTime
   displayName: String!
   email: String!
   id: ID!
+  isDeactivated: Boolean!
   isEmailVerified: Boolean!
   isTotpEnabled: Boolean!
   isVerified: Boolean!
