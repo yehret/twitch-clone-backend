@@ -4,19 +4,25 @@ import { NestFactory } from '@nestjs/core'
 import { RedisStore } from 'connect-redis'
 import * as cookieParser from 'cookie-parser'
 import * as session from 'express-session'
+import * as graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.js'
 
 import { CoreModule } from './core/core.module'
 import { RedisService } from './core/redis/redis.service'
 import { ms, type StringValue } from './shared/utils/ms.util'
 import { parseBoolean } from './shared/utils/parse-boolean.util'
 
+// const graphqlUploadExpress = require('graphql-upload/package')
 async function bootstrap() {
+	// const { default: graphqlUploadExpress } = await import(
+	// 	'graphql-upload/graphqlUploadExpress.mjs'
+	// )
 	const app = await NestFactory.create(CoreModule)
 
 	const config = app.get(ConfigService)
 	const redis = app.get(RedisService)
 
 	app.use(cookieParser(config.getOrThrow<string>('COOKIES_SECRET')))
+	app.use(config.getOrThrow<string>('GRAPHQL_PREFIX'), graphqlUploadExpress())
 
 	app.useGlobalPipes(
 		new ValidationPipe({
