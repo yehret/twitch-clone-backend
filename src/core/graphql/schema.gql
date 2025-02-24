@@ -69,6 +69,7 @@ type Mutation {
   changeProfileAvatar(avatar: Upload!): Boolean!
   changeProfileInfo(data: ChangeProfileInfoInput!): Boolean!
   clearSessionCookie: Boolean!
+  createSocialLink(data: SocialLinkInput!): Boolean!
   createUser(data: CreateUserInput!): Boolean!
   deactivateAccount(data: DeactivateAccountInput!): AuthModel!
   disableTotp: Boolean!
@@ -78,7 +79,10 @@ type Mutation {
   newPassword(data: NewPasswordInput!): Boolean!
   removeProfileAvatar: Boolean!
   removeSession(id: String!): Boolean!
+  removeSocialLink(id: String!): Boolean!
+  reorderSocialLinks(list: [SocialLinkOrderInput!]!): Boolean!
   resetPassword(data: ResetPasswordInput!): Boolean!
+  updateSocialLink(data: SocialLinkInput!, id: String!): Boolean!
   verifyAccount(data: VerificationInput!): AuthModel!
 }
 
@@ -110,6 +114,16 @@ type SessionModel {
   id: ID!
   metadata: SessionMetadataModel!
   userId: String!
+}
+
+input SocialLinkInput {
+  title: String!
+  url: String!
+}
+
+input SocialLinkOrderInput {
+  id: String!
+  position: Float!
 }
 
 type TotpModel {

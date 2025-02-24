@@ -3,7 +3,6 @@
   "tabWidth": 4,
   "useTabs": true,
   "semi": false,
-  "endOfLine": "auto",
   "singleQuote": true,
   "jsxSingleQuote": true,
   "arrowParens": "avoid",
