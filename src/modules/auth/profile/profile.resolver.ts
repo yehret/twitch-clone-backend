@@ -1,4 +1,4 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql'
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js'
 import * as Upload from 'graphql-upload/Upload.js'
 
@@ -12,6 +12,7 @@ import {
 	SocialLinkInput,
 	SocialLinkOrderInput
 } from './inputs/social-link.input'
+import { SocialLinkModel } from './models/social-link'
 import { ProfileService } from './profile.service'
 
 @Resolver('Profile')
@@ -41,6 +42,12 @@ export class ProfileResolver {
 		@Args('data') input: ChangeProfileInfoInput
 	) {
 		return this.profileService.changeInfo(user, input)
+	}
+
+	@Authorization()
+	@Query(() => [SocialLinkModel], { name: 'findSocialLinks' })
+	public async findSocialLinks(@Authorized() user: User) {
+		return this.profileService.findSocialLinks(user)
 	}
 
 	@Authorization()

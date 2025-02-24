@@ -117,6 +117,19 @@ export class ProfileService {
 		return true
 	}
 
+	public async findSocialLinks(user: User) {
+		const socialLinks = await this.prismaService.socialLink.findMany({
+			where: {
+				userId: user.id
+			},
+			orderBy: {
+				position: 'asc'
+			}
+		})
+
+		return socialLinks
+	}
+
 	public async createSocialLink(user: User, input: SocialLinkInput) {
 		const { title, url } = input
 

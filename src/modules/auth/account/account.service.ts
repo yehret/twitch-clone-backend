@@ -1,14 +1,14 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { hash, verify } from 'argon2';
+import { Injectable, UnauthorizedException } from '@nestjs/common'
+import { hash, verify } from 'argon2'
 
-import type { User } from '@/prisma/generated';
-import { PrismaService } from '@/src/core/prisma/prisma.service';
+import type { User } from '@/prisma/generated'
+import { PrismaService } from '@/src/core/prisma/prisma.service'
 
-import { VerificationService } from '../verification/verification.service';
+import { VerificationService } from '../verification/verification.service'
 
-import { ChangeEmailInput } from './inputs/change-email.input';
-import { ChangePasswordInput } from './inputs/change-password.input';
-import { CreateUserInput } from './inputs/create-user.input';
+import { ChangeEmailInput } from './inputs/change-email.input'
+import { ChangePasswordInput } from './inputs/change-password.input'
+import { CreateUserInput } from './inputs/create-user.input'
 
 @Injectable()
 export class AccountService {
@@ -21,33 +21,36 @@ export class AccountService {
 		const user = await this.prismaService.user.findUnique({
 			where: {
 				id
+			},
+			include: {
+				socialLinks: true
 			}
-		});
+		})
 
-		return user;
+		return user
 	}
 
 	public async create(input: CreateUserInput) {
-		const { username, email, password } = input;
+		const { username, email, password } = input
 
 		const isUsernameExists = await this.prismaService.user.findUnique({
 			where: {
 				username
 			}
-		});
+		})
 
 		if (isUsernameExists) {
-			throw new Error('Username is already taken');
+			throw new Error('Username is already taken')
 		}
 
 		const isEmailExists = await this.prismaService.user.findUnique({
 			where: {
 				email
 			}
-		});
+		})
 
 		if (isEmailExists) {
-			throw new Error('Email already exists');
+			throw new Error('Email already exists')
 		}
 
 		const user = await this.prismaService.user.create({
@@ -57,15 +60,15 @@ export class AccountService {
 				password: await hash(password),
 				displayName: username
 			}
-		});
+		})
 
-		await this.verificationService.sendVerificationToken(user);
+		await this.verificationService.sendVerificationToken(user)
 
-		return true;
+		return true
 	}
 
 	public async changeEmail(user: User, input: ChangeEmailInput) {
-		const { email } = input;
+		const { email } = input
 
 		await this.prismaService.user.update({
 			where: {
@@ -74,18 +77,18 @@ export class AccountService {
 			data: {
 				email
 			}
-		});
+		})
 
-		return true;
+		return true
 	}
 
 	public async changePassword(user: User, input: ChangePasswordInput) {
-		const { oldPassword, newPassword } = input;
+		const { oldPassword, newPassword } = input
 
-		const isValidPassword = await verify(user.password, oldPassword);
+		const isValidPassword = await verify(user.password, oldPassword)
 
 		if (!isValidPassword) {
-			throw new UnauthorizedException('Wrong password');
+			throw new UnauthorizedException('Wrong password')
 		}
 
 		await this.prismaService.user.update({
@@ -95,8 +98,8 @@ export class AccountService {
 			data: {
 				password: await hash(newPassword)
 			}
-		});
+		})
 
-		return true;
+		return true
 	}
 }
