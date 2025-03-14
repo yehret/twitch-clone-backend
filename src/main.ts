@@ -16,7 +16,7 @@ async function bootstrap() {
 	// const { default: graphqlUploadExpress } = await import(
 	// 	'graphql-upload/graphqlUploadExpress.mjs'
 	// )
-	const app = await NestFactory.create(CoreModule)
+	const app = await NestFactory.create(CoreModule, { rawBody: true })
 
 	const config = app.get(ConfigService)
 	const redis = app.get(RedisService)
