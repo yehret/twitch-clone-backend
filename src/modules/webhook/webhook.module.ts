@@ -1,4 +1,5 @@
-import { type MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common'
+import { Module, RequestMethod } from '@nestjs/common'
+import type { MiddlewareConsumer } from '@nestjs/common/interfaces'
 
 import { RawBodyMiddleware } from '@/src/shared/middlewares/raw-body.middleware'
 
@@ -13,6 +14,6 @@ export class WebhookModule {
 	public configure(consumer: MiddlewareConsumer) {
 		consumer
 			.apply(RawBodyMiddleware)
-			.forRoutes({ path: 'webhook/lovekit', method: RequestMethod.POST })
+			.forRoutes({ path: 'webhook/livekit', method: RequestMethod.POST })
 	}
 }

@@ -13,10 +13,6 @@ export class WebhookService {
 
 	public async receiveWebhookLivekit(body: string, authorization: string) {
 		try {
-			if (!body || typeof body !== 'string') {
-				throw new Error('Invalid or undefined body')
-			}
-
 			const event = await this.livekitService.receiver.receive(
 				body,
 				authorization,
@@ -48,7 +44,6 @@ export class WebhookService {
 			}
 		} catch (error) {
 			console.error('Error processing webhook:', error.message)
-			// Handle the error appropriately, e.g., log it, return a response, etc.
 		}
 	}
 }

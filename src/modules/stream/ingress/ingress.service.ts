@@ -31,22 +31,16 @@ export class IngressService {
 		}
 
 		if (ingressType === IngressInput.WHIP_INPUT) {
-			options.enableTranscoding = true
+			options.bypassTranscoding = true
 		} else {
-			;(options.video = new IngressVideoOptions({
+			;(options.video = {
 				source: 1,
-				encodingOptions: {
-					case: 'preset',
-					value: IngressVideoEncodingPreset.H264_1080P_30FPS_3_LAYERS
-				}
-			})),
-				(options.audio = new IngressAudioOptions({
+				preset: IngressVideoEncodingPreset.H264_1080P_30FPS_3_LAYERS
+			}),
+				(options.audio = {
 					source: 2,
-					encodingOptions: {
-						case: 'preset',
-						value: IngressAudioEncodingPreset.OPUS_STEREO_96KBPS
-					}
-				}))
+					preset: IngressAudioEncodingPreset.OPUS_STEREO_96KBPS
+				})
 		}
 
 		const ingress = await this.livekitService.ingress.createIngress(
@@ -90,6 +84,25 @@ export class IngressService {
 		// 			value: IngressAudioEncodingPreset.OPUS_STEREO_96KBPS
 		// 		}
 		// 	})
+		// }
+
+		// if (ingressType === IngressInput.WHIP_INPUT) {
+		// 	options.enableTranscoding = true
+		// } else {
+		// 	;(options.video = new IngressVideoOptions({
+		// 		source: 1,
+		// 		encodingOptions: {
+		// 			case: 'preset',
+		// 			value: IngressVideoEncodingPreset.H264_1080P_30FPS_3_LAYERS
+		// 		}
+		// 	})),
+		// 		(options.audio = new IngressAudioOptions({
+		// 			source: 2,
+		// 			encodingOptions: {
+		// 				case: 'preset',
+		// 				value: IngressAudioEncodingPreset.OPUS_STEREO_96KBPS
+		// 			}
+		// 		}))
 		// }
 	}
 
