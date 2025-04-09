@@ -41,7 +41,7 @@ export class FollowService {
 				createdAt: 'desc'
 			},
 			include: {
-				follower: true
+				following: true
 			}
 		})
 

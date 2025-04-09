@@ -52,16 +52,16 @@ export class WebhookService {
 					}
 				})
 
-				// for (const follow of followers) {
-				// 	const follower = follow.follower
+				for (const follow of followers) {
+					const follower = follow.follower
 
-				// 	if (follower.notificationSettings?.siteNotifications) {
-				// 		await this.notificationService.createStreamStart(
-				// 			follower.id,
-				// 			stream.user
-				// 		)
-				// 	}
-				// }
+					if (follower.notificationSettings?.siteNotifications) {
+						await this.notificationService.createStreamStart(
+							follower.id,
+							stream.user!
+						)
+					}
+				}
 			}
 
 			if (event.event === 'ingress_ended') {
