@@ -73,17 +73,14 @@ export class TelegramService extends Telegraf {
 	@Action('me')
 	public async onMe(@Ctx() ctx: Context) {
 		if (!ctx.chat) {
-			await ctx.replyWithHTML(MESSAGES.errorMessage)
-			return
+			return await ctx.replyWithHTML(MESSAGES.errorMessage)
 		}
 
 		const chatId = ctx.chat.id.toString()
-
 		const user = await this.findUserByChatId(chatId)
 
 		if (!user) {
-			await ctx.replyWithHTML(MESSAGES.errorMessage)
-			return
+			return await ctx.replyWithHTML(MESSAGES.errorMessage)
 		}
 
 		const followersCount = await this.prismaService.follow.count({
@@ -96,6 +93,43 @@ export class TelegramService extends Telegraf {
 			MESSAGES.profile(user, followersCount),
 			BUTTONS.profile
 		)
+	}
+
+	@Command('follows')
+	@Action('follows')
+	public async onFollows(@Ctx() ctx: Context) {
+		if (!ctx.chat) {
+			return await ctx.replyWithHTML(MESSAGES.errorMessage)
+		}
+
+		const chatId = ctx.chat.id.toString()
+
+		const user = await this.findUserByChatId(chatId)
+
+		if (!user) {
+			return await ctx.replyWithHTML(MESSAGES.errorMessage)
+		}
+
+		const follows = await this.prismaService.follow.findMany({
+			where: {
+				followerId: user.id
+			},
+			include: {
+				following: true
+			}
+		})
+
+		if (user && follows.length) {
+			const followsList = follows
+				.map(follow => MESSAGES.follows(follow.following))
+				.join('\n')
+
+			const message = `<b>🌟 Followed channels:</b>\n\n${followsList}`
+
+			await ctx.replyWithHTML(message)
+		} else {
+			await ctx.replyWithHTML("<b>❌ You don't follow any channels</b>")
+		}
 	}
 
 	private async connectTelegram(userId: string, chatId: string) {

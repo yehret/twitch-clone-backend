@@ -6,7 +6,7 @@ export const BUTTONS = {
 			Markup.button.callback('📜 My follows', 'follows'),
 			Markup.button.callback('👤 View profile', 'me')
 		],
-		[Markup.button.url('🌐 To website', 'link')]
+		[Markup.button.url('🌐 To website', 'https://google.com')]
 	]),
 	profile: Markup.inlineKeyboard([
 		Markup.button.url('⚙️ Account settings', 'https://google.com')
