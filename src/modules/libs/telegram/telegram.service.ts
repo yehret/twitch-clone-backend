@@ -5,6 +5,7 @@ import { Context, Telegraf } from 'telegraf'
 
 import { TokenType } from '@/prisma/generated'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
+import type { SessionMetadata } from '@/src/shared/types/session-metadata.types'
 
 import { BUTTONS } from './telegram.buttons'
 import { MESSAGES } from './telegram.messages'
@@ -130,6 +131,18 @@ export class TelegramService extends Telegraf {
 		} else {
 			await ctx.replyWithHTML("<b>❌ You don't follow any channels</b>")
 		}
+	}
+
+	public async sendPasswordResetToken(
+		chatId: string,
+		token: string,
+		metadata: SessionMetadata
+	) {
+		await this.telegram.sendMessage(
+			chatId,
+			MESSAGES.resetPassword(token, metadata),
+			{ parse_mode: 'HTML' }
+		)
 	}
 
 	private async connectTelegram(userId: string, chatId: string) {
