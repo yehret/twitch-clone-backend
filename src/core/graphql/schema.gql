@@ -143,6 +143,7 @@ type Mutation {
   clearSessionCookie: Boolean!
   createIngress(ingressType: Float!): Boolean!
   createSocialLink(data: SocialLinkInput!): Boolean!
+  createSponsorshipPlan: Boolean!
   createUser(data: CreateUserInput!): Boolean!
   deactivateAccount(data: DeactivateAccountInput!): AuthModel!
   disableTotp: Boolean!
@@ -155,6 +156,7 @@ type Mutation {
   removeProfileAvatar: Boolean!
   removeSession(id: String!): Boolean!
   removeSocialLink(id: String!): Boolean!
+  removeSponsorshipPlan(id: String!): Boolean!
   removeStreamThumbnail: Boolean!
   reorderSocialLinks(list: [SocialLinkOrderInput!]!): Boolean!
   resetPassword(data: ResetPasswordInput!): Boolean!
@@ -199,6 +201,19 @@ enum NotificationType {
   VERIFIED_CHANNEL
 }
 
+type PlanModel {
+  channel: UserModel!
+  channelId: String!
+  createdAt: DateTime!
+  description: String
+  id: ID!
+  price: Float!
+  stripePlanId: String!
+  stripeProductId: String!
+  title: String!
+  updatedAt: DateTime!
+}
+
 type Query {
   findAllCategories: [CategoryModel!]!
   findAllStreams(filters: FiltersInput!): [StreamModel!]!
@@ -209,6 +224,7 @@ type Query {
   findFollowersCountByChannel(channelId: String!): Float!
   findMyFollowers: [FollowModel!]!
   findMyFollowings: [FollowModel!]!
+  findMySponsorshipPlans: [PlanModel!]!
   findNotificationsByUser: [NotificationModel!]!
   findNotificationsUnreadCount: Float!
   findProfile: UserModel!

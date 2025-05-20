@@ -6,7 +6,7 @@ export function getStripeConfig(
 	configService: ConfigService
 ): TypeStripeOptions {
 	return {
-		apiKey: configService.getOrThrow<string>('STRIPE_API_KEY'),
+		apiKey: configService.getOrThrow<string>('STRIPE_SECRET_KEY'),
 		config: {
 			apiVersion: '2025-04-30.basil'
 		}
