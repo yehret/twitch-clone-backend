@@ -169,6 +169,18 @@ export class TelegramService extends Telegraf {
 		})
 	}
 
+	public async sendNewFollower(chatId: string, follower: User) {
+		const user = await this.findUserByChatId(chatId)
+
+		await this.telegram.sendMessage(
+			chatId,
+			MESSAGES.newFollowing(follower, user!.followings.length),
+			{
+				parse_mode: 'HTML'
+			}
+		)
+	}
+
 	private async connectTelegram(userId: string, chatId: string) {
 		await this.prismaService.user.update({
 			where: {
