@@ -35,9 +35,6 @@ export class PasswordRecoveryService {
 		const user = await this.prismaService.user.findUnique({
 			where: {
 				email
-			},
-			include: {
-				notificationSettings: true
 			}
 		})
 
@@ -62,11 +59,11 @@ export class PasswordRecoveryService {
 		)
 
 		if (
-			user.notificationSettings?.telegramNotifications &&
-			user.telegramId
+			resetToken.user?.notificationSettings?.telegramNotifications &&
+			resetToken.user.telegramId
 		) {
 			await this.telegramService.sendPasswordResetToken(
-				user.telegramId,
+				resetToken.user.telegramId,
 				resetToken.token,
 				metadata
 			)
