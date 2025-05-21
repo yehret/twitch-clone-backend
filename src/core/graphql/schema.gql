@@ -162,7 +162,7 @@ type Mutation {
   generateStreamToken(data: GenerateStreamTokenInput!): GenerateStreamTokenModel!
   loginUser(data: LoginInput!): AuthModel!
   logoutUser: Boolean!
-  makePayment(planId: String!): [MakePaymentModel!]!
+  makePayment(planId: String!): MakePaymentModel!
   newPassword(data: NewPasswordInput!): Boolean!
   removeProfileAvatar: Boolean!
   removeSession(id: String!): Boolean!

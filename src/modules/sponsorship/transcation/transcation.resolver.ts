@@ -21,7 +21,7 @@ export class TranscationResolver {
 	}
 
 	@Authorization()
-	@Mutation(() => [MakePaymentModel], { name: 'makePayment' })
+	@Mutation(() => MakePaymentModel, { name: 'makePayment' })
 	public async makePayment(
 		@Authorized() user: User,
 		@Args('planId') planId: string

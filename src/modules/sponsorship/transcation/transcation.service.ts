@@ -73,6 +73,9 @@ export class TranscationService {
 			throw new Error('Plan must be associated with a channel')
 		}
 
+		const successUrl = `${this.configService.getOrThrow<string>('ALLOWED_ORIGIN')}/success?price=${encodeURIComponent(plan.price)}&username=${encodeURIComponent(plan.channel.username)}`
+		const cancelUrl = `${this.configService.getOrThrow<string>('ALLOWED_ORIGIN')}`
+
 		// TODO: add more payment methods, add to cron auto-payment notification
 		const session = await this.stripeService.checkout.sessions.create({
 			payment_method_types: ['card'],
@@ -81,19 +84,19 @@ export class TranscationService {
 					price_data: {
 						currency: 'usd',
 						product_data: {
-							name: plan.title,
-							description: plan.description ?? ''
+							name: plan.title
 						},
 						unit_amount: Math.round(plan.price * 100),
 						recurring: {
 							interval: 'month'
 						}
-					}
+					},
+					quantity: 1
 				}
 			],
 			mode: 'subscription',
-			success_url: `${this.configService.getOrThrow<string>('ALLOWED_ORIGIN')}/success?price=${plan.price}&username=${plan.channel.username}`,
-			cancel_url: `${this.configService.getOrThrow<string>('ALLOWED_ORIGIN')}`,
+			success_url: successUrl,
+			cancel_url: cancelUrl,
 			customer: customer.id,
 			metadata: {
 				planId: plan.id,

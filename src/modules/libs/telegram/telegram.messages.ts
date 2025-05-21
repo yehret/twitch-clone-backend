@@ -1,4 +1,4 @@
-import type { User } from '@/prisma/generated'
+import type { SponsorshipPlan, User } from '@/prisma/generated'
 import type { SessionMetadata } from '@/src/shared/types/session-metadata.types'
 
 export const MESSAGES = {
@@ -64,6 +64,12 @@ export const MESSAGES = {
 		`Watch here: <a href="https://twitchclone.com/${channel.username}">Go to the stream</a>`,
 	newFollowing: (follower: User, followersCount: number) =>
 		`<b>You have a new follower!</b>\n\nThis user is <a href="https://twitchclone.com/${follower.username}">${follower.displayName}</a>\n\nTotal followers on your channel: ${followersCount}`,
+	newSponsorship: (plan: SponsorshipPlan, sponsor: User) =>
+		`<b>🎉 New sponsorship!</b>\n\n` +
+		`You have received a new sponsorship for the plan <b>${plan.title}</b>.\n` +
+		`💰 Amount: <b>${plan.price} $</b>\n` +
+		`👤 Sponsor: <a href="https://teastream.ru/${sponsor.username}">${sponsor.displayName}</a>\n` +
+		`📅 Date of formation: <b>${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}</b>`,
 	enableTwoFactor:
 		`🔐 Ensure your security!\n\n` +
 		`Enable two-factor authentication in <a href="https://twitchclone.com/dashboard/settings">account settings</a>.`,
