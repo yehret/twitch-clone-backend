@@ -21,7 +21,7 @@ export class TranscationService {
 	public async findMyTransactions(user: User) {
 		const transactions = await this.prismaService.transaction.findMany({
 			where: {
-				id: user.id
+				userId: user.id
 			}
 		})
 
