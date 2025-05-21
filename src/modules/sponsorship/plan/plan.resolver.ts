@@ -5,7 +5,7 @@ import { Authorization } from '@/src/shared/decorators/auth.decorator'
 import { Authorized } from '@/src/shared/decorators/authorized.decorator'
 
 import { CreatePlanInput } from './inputs/create-plan.input'
-import { PlanModel } from './model/plan.model'
+import { PlanModel } from './models/plan.model'
 import { PlanService } from './plan.service'
 
 @Resolver('Plan')
@@ -20,7 +20,10 @@ export class PlanResolver {
 
 	@Authorization()
 	@Mutation(() => Boolean, { name: 'createSponsorshipPlan' })
-	public async create(@Authorized() user: User, input: CreatePlanInput) {
+	public async create(
+		@Authorized() user: User,
+		@Args('data') input: CreatePlanInput
+	) {
 		return this.planService.create(user, input)
 	}
 

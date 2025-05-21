@@ -202,7 +202,7 @@ model SponsorshipPlan {
    id String @id @default(uuid())
 
    title       String
-   description String
+   description String?
    price       Float
 
    stripeProductId String @map("stripe_product_id")
